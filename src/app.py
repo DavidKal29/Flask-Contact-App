@@ -51,9 +51,13 @@ def edit():
 def update():
     return 'update contact'
 
-@app.route('/delete')
-def delete():
-    return 'delete contact'
+@app.route('/delete/<string:id>')
+def delete(id):
+    cursor=mysql.connection.cursor()
+    cursor.execute('DELETE FROM contacts WHERE id=%s',(id))
+    mysql.connection.commit()
+    flash('Contact Removed Successfully')
+    return redirect(url_for('index'))
 
 
 
